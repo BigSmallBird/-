@@ -1,0 +1,6 @@
+# 没有交换机帮忙打标签，PC 自己打 VLAN100（替代 access 口）
+ip link set eth0 up
+ip link add link eth0 name eth0.100 type vlan id 100
+ip addr add 192.168.1.10/24 dev eth0.100
+ip link set eth0.100 up
+ip route replace default via 192.168.1.1

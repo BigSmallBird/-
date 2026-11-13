@@ -1,0 +1,18 @@
+# Safety guard: macOS + OrbStack's katharanp bridge plugin causes a
+# hairpin broadcast storm with this two-switch, same-VLAN topology.
+if uname -r | grep -qi orbstack; then
+    echo "ERROR: OrbStack/katharanp would cause a broadcast storm here."
+    echo "Refusing to configure OVS. Run this lab in a Linux VM/host instead."
+    exit 1
+fi
+
+service openvswitch-switch start
+ovs-vsctl add-br sw1
+ovs-vsctl set bridge sw1 stp_enable=false
+
+ovs-vsctl add-port sw1 eth0 tag=100
+
+ovs-vsctl add-port sw1 eth1 tag=200
+
+ovs-vsctl add-port sw1 eth2 -- set port eth2 trunks=100,200
+ip link set sw1 up

@@ -1,0 +1,12 @@
+# F0/0 物理口 up 但不配 IP —— 只承载 trunk
+ip link set eth0 up
+
+# F0/0.1  encapsulation dot1Q 100  ip address 192.168.1.1/24
+ip link add link eth0 name eth0.100 type vlan id 100
+ip addr add 192.168.1.1/24 dev eth0.100
+ip link set eth0.100 up
+
+# F0/0.2  encapsulation dot1Q 200  ip address 192.168.2.1/24
+ip link add link eth0 name eth0.200 type vlan id 200
+ip addr add 192.168.2.1/24 dev eth0.200
+ip link set eth0.200 up

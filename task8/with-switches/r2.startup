@@ -1,0 +1,10 @@
+# F0/0 -> sw2 -> PC B
+ip addr add 211.2.2.1/24 dev eth0
+ip link set eth0 up
+
+# S0/3 -> r1
+ip addr add 211.1.1.2/24 dev eth1
+ip link set eth1 up
+
+# 到 PC A 所在网段的静态路由，下一跳是 r1 的 S0/2
+ip route replace 192.168.1.0/24 via 211.1.1.1

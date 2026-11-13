@@ -1,0 +1,16 @@
+# E0/0/24 连 trunk，物理口 up 不配 IP
+ip link set eth0 up
+
+# interface vlan 100  ->  ip address 192.168.1.1 255.255.255.0
+ip link add link eth0 name eth0.100 type vlan id 100
+ip addr add 192.168.1.1/24 dev eth0.100
+ip link set eth0.100 up
+
+# interface vlan 200  ->  ip address 192.168.2.1 255.255.255.0
+ip link add link eth0 name eth0.200 type vlan id 200
+ip addr add 192.168.2.1/24 dev eth0.200
+ip link set eth0.200 up
+
+# 对应 Cisco 的 ip routing
+# （已由 lab.conf 的 [sysctl] 打开，这里再确认一次）
+sysctl -w net.ipv4.ip_forward=1 2>/dev/null || true

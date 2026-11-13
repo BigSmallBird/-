@@ -1,0 +1,4 @@
+# 接在交换机的 access 口上，由交换机打 VLAN100 标签，PC 不需要配置 VLAN
+ip addr add 192.168.1.10/24 dev eth0
+ip link set eth0 up
+ip route replace default via 192.168.1.1
