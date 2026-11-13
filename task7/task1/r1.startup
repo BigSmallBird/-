@@ -1,0 +1,24 @@
+# 我们先配置个网关
+ip addr add 192.168.1.1/24 dev eth0
+ip link set eth0 up
+
+# 注入dnsmasq工具，让该镜像可以打开DHCP服务。，同时只能在 interface=eth0上面存在；
+# 只相映eth0上面的请求
+# 并开启3功能；告诉PC我的网关为 192.168.1.1
+# 开启6功能；告诉pcDNS用192.168.1.1
+
+cat > /etc/dnsmasq.conf <<'EOF'
+interface=eth0
+bind-interfaces
+
+dhcp-range=192.168.1.100,192.168.1.200,255.255.255.0,12h
+
+dhcp-option=3,192.168.1.1
+
+dhcp-option=6,192.168.1.1
+
+dhcp-leasefile=/var/lib/misc/dnsmasq.leases
+log-dhcp
+EOF
+
+service dnsmasq start

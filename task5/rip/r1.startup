@@ -1,14 +1,11 @@
-# F0/0 -> PCA 所在网段
 ip addr add 192.168.1.1/24 dev eth0
 ip link set eth0 up
 
-# s0/2 -> r2
+
 ip addr add 192.168.2.1/24 dev eth1
 ip link set eth1 up
 
-# 注意：这里不再写任何静态路由，交给 RIP 学
 
-# 开启 ripd（镜像默认是 no）
 sed -i 's/^ripd=no/ripd=yes/' /etc/frr/daemons
 
 cat > /etc/frr/frr.conf <<'EOF'

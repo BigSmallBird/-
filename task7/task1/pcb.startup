@@ -1,0 +1,8 @@
+ip link set eth0 up
+
+for i in $(seq 1 30); do
+    if dhclient -1 eth0; then
+        break
+    fi
+    sleep 2
+done
