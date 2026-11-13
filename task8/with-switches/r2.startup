@@ -8,3 +8,7 @@ ip link set eth1 up
 
 # 到 PC A 所在网段的静态路由，下一跳是 r1 的 S0/2
 ip route replace 192.168.1.0/24 via 211.1.1.1
+
+# 模拟公网侧拒收私有源地址（RFC1918 filtering），
+# 见 ../README.md 第 2 节。只过滤转发流量。
+iptables -A FORWARD -o eth0 -s 192.168.1.0/24 -j DROP

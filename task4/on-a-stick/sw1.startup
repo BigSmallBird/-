@@ -1,10 +1,3 @@
-# 防止在 macOS/OrbStack 上触发 OVS hairpin 广播风暴
-if uname -r | grep -qi orbstack; then
-    echo "ERROR: OVS switch topology would cause a broadcast storm on OrbStack."
-    echo "Use the no-switch lab in ../macos/, or run this in Kali/Linux."
-    exit 1
-fi
-
 service openvswitch-switch start
 ovs-vsctl add-br sw1
 ovs-vsctl set bridge sw1 stp_enable=false
